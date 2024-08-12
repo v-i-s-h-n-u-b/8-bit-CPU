@@ -1,27 +1,5 @@
 `timescale 1ns / 1ps
 
-////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
-//
-// Create Date:   22:28:25 08/11/2024
-// Design Name:   RegisterFile
-// Module Name:   /home/ise/Desktop/simple8bitCPU/Register_file_tb.v
-// Project Name:  simple8bitCPU
-// Target Device:  
-// Tool versions:  
-// Description: 
-//
-// Verilog Test Fixture created by ISE for module: RegisterFile
-//
-// Dependencies:
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-////////////////////////////////////////////////////////////////////////////////
-
 module Register_file_tb;
 
 	// Inputs
@@ -47,9 +25,10 @@ module Register_file_tb;
 		.read_data1(read_data1), 
 		.read_data2(read_data2)
 	);
-always #5 clk = ~clk;
 
-    // Test sequence
+    always #5 clk = ~clk;
+
+
     initial begin
         clk = 0;
         writeenable = 0;
@@ -58,7 +37,7 @@ always #5 clk = ~clk;
         read_reg2 = 3'b010;
         write_data = 8'hFF;
        
-		  // Test write operation
+	// Test write operation
         #10;
         writeenable = 1;
         write_reg = 3'b001;
@@ -66,7 +45,7 @@ always #5 clk = ~clk;
         #10;
         writeenable = 0;
         
-		  // Test read operation
+	// Test read operation
         #10;
         read_reg1 = 3'b001;
         read_reg2 = 3'b010;
