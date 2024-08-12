@@ -16,9 +16,8 @@ module WB_Stage_tb;
         .write_data(write_data)
     );
 
-    // Test sequence
     initial begin
-        // Initialize Inputs
+        // Initializing Inputs
         mem_to_reg = 0;
         alu_result = 8'h00;
         memory_read_data = 8'h00;
@@ -29,9 +28,11 @@ module WB_Stage_tb;
         mem_to_reg = 0;               // Select ALU result
         #10;
         $display("Write Data (mem_to_reg=0): %h", write_data);
- // Test case 2: mem_to_reg = 1
+ 
+       // Test case 2: mem_to_reg = 1
         mem_to_reg = 1;               // Select memory read data
         #10;
         $display("Write Data (mem_to_reg=1): %h", write_data);
-$finish;
+        $finish;
     end
+endmodule
