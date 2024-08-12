@@ -8,11 +8,11 @@ module IF_Stage (  // Instruction fetch
 );
     reg [7:0] instruction_memory [255:0]; // 256 x 8-bit instruction memory
 
-always @(posedge clk or posedge reset) begin
+    always @(posedge clk or posedge reset) begin
         if (reset) begin
             pc <= 8'b0; // Reset PC to 0
         end else if (branch_taken) begin
-            pc <= branch_address; // Update PC with branch address
+            pc <= branch_address; // Using the branch predictor - if branch is taken then updated the branch address, otherwise default operation
         end else begin
             pc <= pc + 1; // Increment PC
         end
