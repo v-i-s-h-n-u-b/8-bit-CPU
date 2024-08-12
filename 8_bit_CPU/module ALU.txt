@@ -12,6 +12,7 @@ module ALU(
             3'b010: result = a & b; // AND
             3'b011: result = a | b; // OR
             3'b100: result = a ^ b; // XOR
+            3'b101: result = 0; // NOP (default)
             default: result = 8'b00000000;
         endcase
     end
