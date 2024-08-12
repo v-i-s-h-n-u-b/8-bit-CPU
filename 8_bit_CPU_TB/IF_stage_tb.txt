@@ -1,27 +1,5 @@
 `timescale 1ns / 1ps
 
-////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
-//
-// Create Date:   22:37:29 08/11/2024
-// Design Name:   IF_Stage
-// Module Name:   /home/ise/Desktop/simple8bitCPU/IF_stage_tb.v
-// Project Name:  simple8bitCPU
-// Target Device:  
-// Tool versions:  
-// Description: 
-//
-// Verilog Test Fixture created by ISE for module: IF_Stage
-//
-// Dependencies:
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-////////////////////////////////////////////////////////////////////////////////
-
 module IF_stage_tb;
 
 	// Inputs
@@ -44,10 +22,9 @@ module IF_stage_tb;
 		.instruction(instruction)
 	);
 
-	// Clock generation
+
     always #5 clk = ~clk;
 
-    // Test sequence
     initial begin
         clk = 0;
         reset = 1;
@@ -58,7 +35,8 @@ module IF_stage_tb;
         #10;
         reset = 0;
         #10;
-		   // Test PC increment and branch
+       
+        // Test PC increment and branch
         branch_taken = 1;
         branch_address = 8'hFF;
         #10;
@@ -66,7 +44,7 @@ module IF_stage_tb;
 
         branch_taken = 0;
         #10;
-        $display("PC: %h, Instruction: %h", pc, instruction);
+        $display("PC: %h, Instruction: %h", pc, instruction);    // Will come back to WEAKLY NOT TAKEN stage
 
         $finish;
     end
