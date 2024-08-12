@@ -1,27 +1,5 @@
 `timescale 1ns / 1ps
 
-////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
-//
-// Create Date:   23:04:27 08/11/2024
-// Design Name:   CPU
-// Module Name:   /home/ise/Desktop/simple8bitCPU/CPU_tb.v
-// Project Name:  simple8bitCPU
-// Target Device:  
-// Tool versions:  
-// Description: 
-//
-// Verilog Test Fixture created by ISE for module: CPU
-//
-// Dependencies:
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-////////////////////////////////////////////////////////////////////////////////
-
 module CPU_tb;
 
 	// Inputs
