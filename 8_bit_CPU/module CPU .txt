@@ -6,43 +6,36 @@ module CPU (
     input [7:0] write_data, memory_address, branch_result,
     input [7:0] irq,
     output [7:0] alu_result, memory_read_data, reg_data2,
-	 output [7:0] reg_data1_temp,
+    output [7:0] reg_data1_temp,
     output zero, branch_prediction,
-	 output wire irq_ack
+    output wire irq_ack
 );
 
     // Pipeline registers for each stage
     reg [7:0] IF_ID_pc;
     reg [7:0] IF_ID_instruction;
-    wire [3:0] ID_EX_opcode_temp;
-    wire [2:0] ID_EX_read_reg1_temp, ID_EX_read_reg2_temp, ID_EX_write_reg_temp;
     reg [7:0] ID_EX_read_data1, ID_EX_read_data2;
-	 wire [7:0] ID_EX_immediate_temp;
     reg [7:0] EX_MEM_alu_result, EX_MEM_read_data2;
     reg [7:0] MEM_WB_alu_result, MEM_WB_memory_read_data;
     reg [3:0] ID_EX_opcode;
     reg [7:0] ID_EX_read_reg1, ID_EX_read_reg2, ID_EX_write_reg, ID_EX_immediate; 
     reg [7:0] alu_result_internal;
-    reg [7:0] reg_data1;	 
+    reg [7:0] reg_data1;
+    reg [7:0] pc; // Program Counter
+    reg [7:0] saved_pc; // To save the PC during an interrupt
+    reg [7:0] registers[7:0]; // To save registers during an interrupt
 
+    wire [3:0] ID_EX_opcode_temp;
+    wire [2:0] ID_EX_read_reg1_temp, ID_EX_read_reg2_temp, ID_EX_write_reg_temp;
+    wire [7:0] ID_EX_immediate_temp;
     wire reg_dst, alu_src, mem_to_reg, reg_write, mem_read, mem_write, branch;
     wire [2:0] alu_control;
     wire [7:0] alu_input_b, read_data1, read_data2;
     wire irq_pending;
-	 wire irq_ack_internal;
-    reg [7:0] pc; // Program Counter
-    reg [7:0] saved_pc; // To save the PC during an interrupt
-    reg [7:0] registers[7:0]; // To save registers during an interrupt
+    wire irq_ack_internal;
     wire [7:0] instruction;
-    reg [7:0] memory_write_data;
     wire [7:0] alu_result_internal_temp;
-	  // Output wires
     wire [7:0] pc_out;
-    //wire [7:0] instruction_out;
-    
-    // Assign output wires
-    //assign pc_out = pc;
-   // assign instruction_out = IF_ID_instruction;
 
 
  // Control Unit
@@ -97,7 +90,7 @@ module CPU (
         .prediction(branch_prediction)
     );
     
-	 // Interrupt Controller
+    // Interrupt Controller
     InterruptController interrupt_controller (
         .clk(clk),
         .reset(reset),
@@ -105,7 +98,9 @@ module CPU (
         .irq_pending(irq_pending),
         .irq_ack(irq_ack) 
     );
-	  IF_Stage if_stage(
+
+    //IF stage
+    IF_Stage if_stage(
         .clk(clk),
         .reset(reset),
         .branch_taken(branch_taken),
@@ -114,7 +109,7 @@ module CPU (
         .instruction(instruction)
     );
 
-	  // Instantiate the ID Stage
+    // ID Stage
     ID_Stage id_stage(
         .clk(clk),
         .reset(reset),
@@ -126,7 +121,7 @@ module CPU (
         .immediate(ID_EX_immediate_temp)
     );
 
-   // Instantiate the EX Stage
+   //EX Stage
     EX_Stage ex_stage(
         .read_data1(ID_EX_read_data1),
         .read_data2(ID_EX_read_data2),
@@ -135,7 +130,7 @@ module CPU (
         .alu_result(alu_result_internal_temp),
         .zero(zero)
     );
-  // Instantiate the MEM Stage
+  //MEM Stage
     MEM_Stage mem_stage(
         .clk(clk),
         .mem_read(mem_read),
@@ -144,14 +139,15 @@ module CPU (
         .write_data(EX_MEM_read_data2),
         .read_data(mem_read_data)
     );
- // Instantiate the WB Stage
+ // WB Stage
     WB_Stage wb_stage(
         .mem_to_reg(mem_to_reg),
         .mem_data(MEM_WB_mem_read_data),
         .alu_result(MEM_WB_alu_result),
         .write_data(reg_data1_temp)
     );
-    assign pc_out = pc;
+        
+         assign pc_out = pc;
 	 assign ID_EX_opcode_temp = ID_EX_opcode;
 	 assign ID_EX_read_reg1_temp = ID_EX_read_reg1;
 	 assign ID_EX_read_reg2_temp = ID_EX_read_reg2;
@@ -160,7 +156,7 @@ module CPU (
 	 assign alu_result_internal_temp = alu_result_internal;
 	 assign reg_data1_temp = reg_data1;
 	 
-   // Main CPU Operation
+   // Main 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             pc <= 8'b0;   // Reset program counter and pipeline registers
@@ -169,7 +165,7 @@ module CPU (
         end else if (irq_pending && !irq_ack) begin                      
             saved_pc <= pc; // Save current PC (handling interrupt)
             pc <= 8'hff; // Jump to interrupt vector address (taken 8'hFF as the example address)			
-		  end else if (irq_ack) begin
+        end else if (irq_ack) begin
             pc <= saved_pc; // Restore PC after interrupt
         end else if (branch_prediction) begin
             pc <= alu_result_internal; // Jump to branch address if branch is predicted taken
@@ -189,7 +185,7 @@ module CPU (
         end
     end
 	  
-	  // Decode Stage
+    // Decode Stage
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             // Reset pipeline registers
@@ -202,7 +198,7 @@ module CPU (
             ID_EX_immediate <= 8'b0;
 
 	 end else begin
-            // Pass instruction fields to the next stage
+            // Passing instruction fields to the next stage
             ID_EX_opcode <= instruction[7:4];
             ID_EX_read_reg1 <= instruction[3:1];//rs
             ID_EX_read_reg2 <= instruction[2:0];//rd
@@ -224,11 +220,11 @@ module CPU (
             alu_result_internal <= (alu_src) ? ID_EX_immediate : ID_EX_read_data2;
             case (alu_control)
                 3'b000: alu_result_internal <= ID_EX_read_data1 + alu_result_internal;//ADD
-                3'b001: alu_result_internal <= ID_EX_read_data1 - alu_result_internal;//SUBTRACT
-					 3'b010: alu_result_internal <= ID_EX_read_data1 & alu_result_internal;//AND
-					 3'b011: alu_result_internal <= ID_EX_read_data1 | alu_result_internal;//OR
-					 3'b100: alu_result_internal <= ID_EX_read_data1 ^ alu_result_internal;//XOR
-				    default: alu_result_internal <= 8'b00000000;//No operation 
+                3'b001: alu_result_internal <= ID_EX_read_data1 - alu_result_internal;//SUB
+	        3'b010: alu_result_internal <= ID_EX_read_data1 & alu_result_internal;//AND
+                3'b011: alu_result_internal <= ID_EX_read_data1 | alu_result_internal;//OR
+		3'b100: alu_result_internal <= ID_EX_read_data1 ^ alu_result_internal;//XOR
+		default: alu_result_internal <= 8'b00000000;//No operation 
             endcase
             // Pass data to the next stage
             EX_MEM_alu_result <= alu_result_internal;
@@ -244,14 +240,13 @@ module CPU (
             MEM_WB_alu_result <= 8'b0;
             MEM_WB_memory_read_data <= 8'b0;
         end else begin
-            // Memory read/write
             if (mem_read) begin
                 MEM_WB_memory_read_data <= memory_read_data;
             end
             if (mem_write) begin
                 memory_write_data <= EX_MEM_read_data2;
             end
-            // Pass data to the next stage
+            // Passing data to the WB_stage
             MEM_WB_alu_result <= EX_MEM_alu_result;
         end
     end
