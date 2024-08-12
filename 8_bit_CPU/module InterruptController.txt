@@ -5,12 +5,11 @@ module InterruptController(
     output reg irq_pending,
     output reg irq_ack
 );
-   // reg irq_ack_reg; //Another register created so as to avoid clash between reg and net datattypes in cpu module (Instantiation and non blocking assignments)
 	 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             irq_pending <= 0;
-				irq_ack<=0;
+	    irq_ack<=0;
         end else begin
             if (irq != 0) begin    // Handle irq_pending based on irq and irq_ack
                 irq_pending <= 1;  // Set pending flag
@@ -24,7 +23,4 @@ module InterruptController(
             end
         end
     end
-	 //always @(*) begin
-    //    irq_ack = irq_ack_reg;
-   // end
 endmodule
