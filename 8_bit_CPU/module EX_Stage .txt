@@ -11,7 +11,7 @@ module EX_Stage (
     assign alu_input_b = alu_src ? immediate : reg_data2;
 
     // ALU Operation
-    ALU alu (
+    ALU alu (              
         .a(reg_data1),
         .b(alu_input_b),
         .alu_control(alu_control),
