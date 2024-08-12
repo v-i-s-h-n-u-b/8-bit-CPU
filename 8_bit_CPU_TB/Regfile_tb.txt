@@ -1,0 +1,78 @@
+`timescale 1ns / 1ps
+
+////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer:
+//
+// Create Date:   22:28:25 08/11/2024
+// Design Name:   RegisterFile
+// Module Name:   /home/ise/Desktop/simple8bitCPU/Register_file_tb.v
+// Project Name:  simple8bitCPU
+// Target Device:  
+// Tool versions:  
+// Description: 
+//
+// Verilog Test Fixture created by ISE for module: RegisterFile
+//
+// Dependencies:
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+////////////////////////////////////////////////////////////////////////////////
+
+module Register_file_tb;
+
+	// Inputs
+	reg clk;
+	reg writeenable;
+	reg [2:0] read_reg1;
+	reg [2:0] read_reg2;
+	reg [2:0] write_reg;
+	reg [7:0] write_data;
+
+	// Outputs
+	wire [7:0] read_data1;
+	wire [7:0] read_data2;
+
+	// Instantiate the Unit Under Test (UUT)
+	RegisterFile uut (
+		.clk(clk), 
+		.writeenable(writeenable), 
+		.read_reg1(read_reg1), 
+		.read_reg2(read_reg2), 
+		.write_reg(write_reg), 
+		.write_data(write_data), 
+		.read_data1(read_data1), 
+		.read_data2(read_data2)
+	);
+always #5 clk = ~clk;
+
+    // Test sequence
+    initial begin
+        clk = 0;
+        writeenable = 0;
+        write_reg = 3'b000;
+        read_reg1 = 3'b001;
+        read_reg2 = 3'b010;
+        write_data = 8'hFF;
+       
+		  // Test write operation
+        #10;
+        writeenable = 1;
+        write_reg = 3'b001;
+        write_data = 8'hAA;
+        #10;
+        writeenable = 0;
+        
+		  // Test read operation
+        #10;
+        read_reg1 = 3'b001;
+        read_reg2 = 3'b010;
+        #10;
+        $display("Read Data1: %h, Read Data2: %h", read_data1, read_data2);
+
+        $finish;
+    end
+endmodule

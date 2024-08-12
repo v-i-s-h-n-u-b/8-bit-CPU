@@ -1,0 +1,75 @@
+`timescale 1ns / 1ps
+
+////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer:
+//
+// Create Date:   22:37:29 08/11/2024
+// Design Name:   IF_Stage
+// Module Name:   /home/ise/Desktop/simple8bitCPU/IF_stage_tb.v
+// Project Name:  simple8bitCPU
+// Target Device:  
+// Tool versions:  
+// Description: 
+//
+// Verilog Test Fixture created by ISE for module: IF_Stage
+//
+// Dependencies:
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+////////////////////////////////////////////////////////////////////////////////
+
+module IF_stage_tb;
+
+	// Inputs
+	reg clk;
+	reg reset;
+	reg branch_taken;
+	reg [7:0] branch_address;
+
+	// Outputs
+	wire [7:0] pc;
+	wire [7:0] instruction;
+
+	// Instantiate the Unit Under Test (UUT)
+	IF_Stage uut (
+		.clk(clk), 
+		.reset(reset), 
+		.branch_taken(branch_taken), 
+		.branch_address(branch_address), 
+		.pc(pc), 
+		.instruction(instruction)
+	);
+
+	// Clock generation
+    always #5 clk = ~clk;
+
+    // Test sequence
+    initial begin
+        clk = 0;
+        reset = 1;
+        branch_taken = 0;
+        branch_address = 8'h00;
+
+        // Reset
+        #10;
+        reset = 0;
+        #10;
+		   // Test PC increment and branch
+        branch_taken = 1;
+        branch_address = 8'hFF;
+        #10;
+        $display("PC: %h, Instruction: %h", pc, instruction);
+
+        branch_taken = 0;
+        #10;
+        $display("PC: %h, Instruction: %h", pc, instruction);
+
+        $finish;
+    end
+      
+endmodule
+

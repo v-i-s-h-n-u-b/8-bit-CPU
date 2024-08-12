@@ -1,0 +1,22 @@
+module IF_Stage (  // Instruction fetch
+    input clk,
+    input reset,
+    input branch_taken,
+    input [7:0] branch_address,
+    output reg [7:0] pc,
+    output [7:0] instruction
+);
+    reg [7:0] instruction_memory [255:0]; // 256 x 8-bit instruction memory
+
+always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            pc <= 8'b0; // Reset PC to 0
+        end else if (branch_taken) begin
+            pc <= branch_address; // Update PC with branch address
+        end else begin
+            pc <= pc + 1; // Increment PC
+        end
+    end
+
+    assign instruction = instruction_memory[pc]; // Instruction fetch from memory
+endmodule

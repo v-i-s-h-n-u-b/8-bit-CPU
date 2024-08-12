@@ -1,0 +1,15 @@
+module RegisterFile (
+    input clk, writeenable,
+    input [2:0] read_reg1, read_reg2, write_reg,
+    input [7:0] write_data, // data to be written
+    output [7:0] read_data1, read_data2 // data to be read 
+);
+    reg [7:0] registers [7:0]; //8-8 bit registers
+    
+    assign read_data1 = registers[read_reg1];
+    assign read_data2 = registers[read_reg2];
+    always @(posedge clk) begin
+        if (writeenable)
+            registers[write_reg] <= write_data;
+    end
+endmodule

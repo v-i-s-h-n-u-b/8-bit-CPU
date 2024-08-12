@@ -1,0 +1,51 @@
+module EX_Stage_tb;
+
+    // Inputs
+    reg [7:0] reg_data1;
+    reg [7:0] reg_data2;
+    reg [7:0] immediate;
+    reg [2:0] alu_control;
+    reg alu_src;
+
+    // Outputs
+    wire [7:0] alu_result;
+    wire zero;
+
+    // Instantiate the Unit Under Test (UUT)
+    EX_Stage uut (
+        .reg_data1(reg_data1), 
+        .reg_data2(reg_data2), 
+        .immediate(immediate), 
+        .alu_control(alu_control), 
+        .alu_src(alu_src), 
+        .alu_result(alu_result), 
+        .zero(zero)
+    );
+
+    // Test sequence
+    initial begin
+        // Initialize Inputs
+        reg_data1 = 8'h0A;   // Example value
+        reg_data2 = 8'h05;   // Example value
+        immediate = 8'h03;   // Example immediate value
+        alu_control = 3'b010; // Example ALU control (e.g., ADD operation)
+        alu_src = 1'b0;       // Use reg_data2 as input B
+
+        // Wait for the result
+        #10;
+        $display("ALU Result: %h, Zero: %b", alu_result, zero);
+
+        // Test with immediate as input B
+        alu_src = 1'b1;       // Use immediate as input B
+        #10;
+        $display("ALU Result with Immediate: %h, Zero: %b", alu_result, zero);
+
+        // Test different ALU control (e.g., SUB operation)
+        alu_control = 3'b110; // Example ALU control for SUB
+        alu_src = 1'b0;       // Use reg_data2 as input B
+        #10;
+        $display("ALU Result with SUB: %h, Zero: %b", alu_result, zero);
+
+        $finish;
+    end
+endmodule

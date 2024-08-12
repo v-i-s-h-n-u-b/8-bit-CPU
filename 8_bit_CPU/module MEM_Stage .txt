@@ -1,0 +1,18 @@
+module MEM_Stage (
+    input clk,
+    input mem_read,
+    input mem_write,
+    input [7:0] alu_result,
+    input [7:0] reg_data2,
+    output [7:0] memory_read_data
+);
+    Memory memory (
+        .clk(clk),
+        .mem_read(mem_read),
+        .mem_write(mem_write),
+        .address(alu_result),
+        .write_data(reg_data2),
+        .read_data(memory_read_data)
+    );
+
+endmodule

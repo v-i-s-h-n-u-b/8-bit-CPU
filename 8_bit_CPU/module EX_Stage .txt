@@ -1,0 +1,21 @@
+module EX_Stage (
+    input [7:0] reg_data1,
+    input [7:0] reg_data2,
+    input [7:0] immediate,
+    input [2:0] alu_control,
+    input alu_src,
+    output [7:0] alu_result,
+    output zero
+);
+    wire [7:0] alu_input_b;
+    assign alu_input_b = alu_src ? immediate : reg_data2;
+
+    // ALU Operation
+    ALU alu (
+        .a(reg_data1),
+        .b(alu_input_b),
+        .alu_control(alu_control),
+        .result(alu_result),
+        .zero(zero)
+    );
+endmodule

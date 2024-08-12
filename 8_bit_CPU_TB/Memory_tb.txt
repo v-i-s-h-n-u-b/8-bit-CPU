@@ -1,0 +1,78 @@
+`timescale 1ns / 1ps
+
+////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer:
+//
+// Create Date:   22:31:31 08/11/2024
+// Design Name:   Memory
+// Module Name:   /home/ise/Desktop/simple8bitCPU/Memory_tb.v
+// Project Name:  simple8bitCPU
+// Target Device:  
+// Tool versions:  
+// Description: 
+//
+// Verilog Test Fixture created by ISE for module: Memory
+//
+// Dependencies:
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+////////////////////////////////////////////////////////////////////////////////
+
+module Memory_tb;
+
+	// Inputs
+	reg clk;
+	reg mem_read;
+	reg mem_write;
+	reg [7:0] address;
+	reg [7:0] write_data;
+
+	// Outputs
+	wire [7:0] read_data;
+
+	// Instantiate the Unit Under Test (UUT)
+	Memory uut (
+		.clk(clk), 
+		.mem_read(mem_read), 
+		.mem_write(mem_write), 
+		.address(address), 
+		.write_data(write_data), 
+		.read_data(read_data)
+	);
+
+	// Clock generation
+    always #5 clk = ~clk;
+
+    
+    initial begin
+        clk = 0;
+        mem_read = 0;
+        mem_write = 0;
+        address = 8'h00;
+        write_data = 8'hAA;
+		  
+		  // Test write operation
+        #10;
+        mem_write = 1;
+        address = 8'h10;
+        write_data = 8'hBB;
+        #10;
+        mem_write = 0;
+		  
+		  // Test read operation
+        #10;
+        mem_read = 1;
+        address = 8'h10;
+        #10;
+        $display("Read Data: %h", read_data);
+
+        $finish;
+
+	end
+      
+endmodule
+

@@ -1,0 +1,30 @@
+module InterruptController(
+    input clk,
+    input reset,
+    input [7:0] irq,
+    output reg irq_pending,
+    output reg irq_ack
+);
+   // reg irq_ack_reg; //Another register created so as to avoid clash between reg and net datattypes in cpu module (Instantiation and non blocking assignments)
+	 
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            irq_pending <= 0;
+				irq_ack<=0;
+        end else begin
+            if (irq != 0) begin    // Handle irq_pending based on irq and irq_ack
+                irq_pending <= 1;  // Set pending flag
+            end else if (irq_ack) begin
+                irq_pending <= 0; // Clear pending flag after acknowledging interrupt
+            end
+            if (irq_pending && !irq_ack) begin
+                irq_ack <= 1; // Acknowledge the interrupt
+            end else if (!irq_pending) begin
+                irq_ack <= 0; // Clear Acknowledge register
+            end
+        end
+    end
+	 //always @(*) begin
+    //    irq_ack = irq_ack_reg;
+   // end
+endmodule

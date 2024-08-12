@@ -1,0 +1,69 @@
+`timescale 1ns / 1ps
+
+////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer:
+//
+// Create Date:   22:33:38 08/11/2024
+// Design Name:   BranchPredictor
+// Module Name:   /home/ise/Desktop/simple8bitCPU/Branch_predictor_tb.v
+// Project Name:  simple8bitCPU
+// Target Device:  
+// Tool versions:  
+// Description: 
+//
+// Verilog Test Fixture created by ISE for module: BranchPredictor
+//
+// Dependencies:
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+////////////////////////////////////////////////////////////////////////////////
+
+module Branch_predictor_tb;
+
+	// Inputs
+	reg clk;
+	reg reset;
+	reg branch_result;
+
+	// Outputs
+	wire prediction;
+
+	// Instantiate the Unit Under Test (UUT)
+	BranchPredictor uut (
+		.clk(clk), 
+		.reset(reset), 
+		.branch_result(branch_result), 
+		.prediction(prediction)
+	);
+
+	
+    // Clock generation
+    always #5 clk = ~clk;
+
+    // Test sequence
+    initial begin
+        clk = 0;
+        reset = 1;
+        branch_result = 0;
+
+        // Reset
+        #10;
+        reset = 0;
+        #10;
+		  // Test branch prediction
+        branch_result = 1;
+        #10;
+        $display("Prediction: %b", prediction);
+
+        branch_result = 0;
+        #10;
+        $display("Prediction: %b", prediction);
+
+        $finish;
+    end  
+endmodule
+

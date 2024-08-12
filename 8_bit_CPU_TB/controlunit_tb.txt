@@ -1,0 +1,71 @@
+`timescale 1ns / 1ps
+
+////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer:
+//
+// Create Date:   22:30:16 08/11/2024
+// Design Name:   ControlUnit
+// Module Name:   /home/ise/Desktop/simple8bitCPU/Control_unit_tb.v
+// Project Name:  simple8bitCPU
+// Target Device:  
+// Tool versions:  
+// Description: 
+//
+// Verilog Test Fixture created by ISE for module: ControlUnit
+//
+// Dependencies:
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+////////////////////////////////////////////////////////////////////////////////
+
+module Control_unit_tb;
+
+	// Inputs
+	reg [3:0] opcode;
+
+	// Outputs
+	wire reg_dst;
+	wire alu_src;
+	wire mem_to_reg;
+	wire reg_write;
+	wire mem_read;
+	wire mem_write;
+	wire branch;
+	wire [2:0] alu_control;
+
+	// Instantiate the Unit Under Test (UUT)
+	ControlUnit uut (
+		.opcode(opcode), 
+		.reg_dst(reg_dst), 
+		.alu_src(alu_src), 
+		.mem_to_reg(mem_to_reg), 
+		.reg_write(reg_write), 
+		.mem_read(mem_read), 
+		.mem_write(mem_write), 
+		.branch(branch), 
+		.alu_control(alu_control)
+	);
+
+	 // Test sequence
+    initial begin
+        // Test ADD
+        opcode = 4'b0001;
+        #10;
+        $display("Opcode: %b, RegDst: %b, ALUSrc: %b, MemToReg: %b, RegWrite: %b, MemRead: %b, MemWrite: %b, Branch: %b, ALUControl: %b",
+                 opcode, reg_dst, alu_src, mem_to_reg, reg_write, mem_read, mem_write, branch, alu_control);
+        
+		  // Test LD
+        opcode = 4'b0110;
+        #10;
+        $display("Opcode: %b, RegDst: %b, ALUSrc: %b, MemToReg: %b, RegWrite: %b, MemRead: %b, MemWrite: %b, Branch: %b, ALUControl: %b",
+                 opcode, reg_dst, alu_src, mem_to_reg, reg_write, mem_read, mem_write, branch, alu_control);
+
+        $finish;
+    end
+      
+endmodule
+

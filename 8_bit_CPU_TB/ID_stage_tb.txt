@@ -1,0 +1,72 @@
+`timescale 1ns / 1ps
+
+////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer:
+//
+// Create Date:   22:38:22 08/11/2024
+// Design Name:   ID_Stage
+// Module Name:   /home/ise/Desktop/simple8bitCPU/ID_stage_tb.v
+// Project Name:  simple8bitCPU
+// Target Device:  
+// Tool versions:  
+// Description: 
+//
+// Verilog Test Fixture created by ISE for module: ID_Stage
+//
+// Dependencies:
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+////////////////////////////////////////////////////////////////////////////////
+
+module ID_stage_tb;
+
+	// Inputs
+	reg clk;
+	reg reset;
+	reg [7:0] instruction;
+
+	// Outputs
+	wire [3:0] opcode;
+	wire [2:0] read_reg1;
+	wire [2:0] read_reg2;
+	wire [2:0] write_reg;
+	wire [7:0] immediate;
+
+	// Instantiate the Unit Under Test (UUT)
+	ID_Stage uut (
+		.clk(clk), 
+		.reset(reset), 
+		.instruction(instruction), 
+		.opcode(opcode), 
+		.read_reg1(read_reg1), 
+		.read_reg2(read_reg2), 
+		.write_reg(write_reg), 
+		.immediate(immediate)
+	);
+
+	 // Clock generation
+    always #5 clk = ~clk;
+
+    // Test sequence
+    initial begin
+        clk = 0;
+        reset = 1;
+        instruction = 8'h00;
+
+        // Reset
+        #10;
+        reset = 0;
+        #10;
+        // Test instruction decode
+        instruction = 8'hAB;
+        #10;
+        $display("Opcode: %h, Read Reg1: %h, Read Reg2: %h, Write Reg: %h, Immediate: %h", opcode, read_reg1, read_reg2, write_reg, immediate);
+
+        $finish;
+    end 
+endmodule
+

@@ -1,0 +1,49 @@
+module BranchPredictor(
+    input wire clk,
+    input wire reset,
+    input wire branch_result,   // 1 if branch was taken, 0 otherwise
+    output wire prediction      // 1 if predicted to be taken, 0 otherwise
+);
+
+    reg [1:0] state;  // 2-bit state register
+	 // Define states
+    localparam STRONGLY_NOT_TAKEN = 2'b00,
+               WEAKLY_NOT_TAKEN   = 2'b01,
+               WEAKLY_TAKEN       = 2'b10,
+               STRONGLY_TAKEN     = 2'b11;
+// Update state on clock or reset
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            state <= STRONGLY_NOT_TAKEN; // Initialize as branch strongly not taken
+     end else begin
+            case (state)
+                STRONGLY_NOT_TAKEN: begin
+                    if (branch_result)
+                        state <= WEAKLY_NOT_TAKEN;
+                    // It will remain in STRONGLY_NOT_TAKEN if branch_result IS 0
+                end
+                WEAKLY_NOT_TAKEN: begin
+                    if (branch_result)
+                        state <= WEAKLY_TAKEN;
+                    else
+                        state <= STRONGLY_NOT_TAKEN; // goes back to strongly not taken if result is 0
+                end
+                WEAKLY_TAKEN: begin
+                    if (branch_result)
+                        state <= STRONGLY_TAKEN;
+                    else
+                        state <= WEAKLY_NOT_TAKEN;
+					 end
+                STRONGLY_TAKEN: begin
+                    if (!branch_result)
+                        state <= WEAKLY_TAKEN;
+                    // It wil remain in STRONGLY_TAKEN if branch_result IS 1
+                end
+            endcase
+        end
+    end
+
+    // Predict branch taken if in WEAKLY_TAKEN or STRONGLY_TAKEN states
+    assign prediction = (state == WEAKLY_TAKEN || state == STRONGLY_TAKEN);
+	 
+endmodule

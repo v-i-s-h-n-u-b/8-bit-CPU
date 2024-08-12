@@ -1,0 +1,9 @@
+module WB_Stage (
+    input mem_to_reg,
+    input [7:0] alu_result,
+    input [7:0] memory_read_data,
+    output [7:0] write_data
+);
+    // Write-back stage: Select between ALU result and memory read data
+    assign write_data = mem_to_reg ? memory_read_data : alu_result;
+endmodule
