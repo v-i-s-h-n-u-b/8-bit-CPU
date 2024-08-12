@@ -1,27 +1,5 @@
 `timescale 1ns / 1ps
 
-////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
-//
-// Create Date:   22:35:20 08/11/2024
-// Design Name:   InterruptController
-// Module Name:   /home/ise/Desktop/simple8bitCPU/Interrupt_controller_tb.v
-// Project Name:  simple8bitCPU
-// Target Device:  
-// Tool versions:  
-// Description: 
-//
-// Verilog Test Fixture created by ISE for module: InterruptController
-//
-// Dependencies:
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-////////////////////////////////////////////////////////////////////////////////
-
 module Interrupt_controller_tb;
 
 	// Inputs
@@ -42,10 +20,9 @@ module Interrupt_controller_tb;
 		.irq_ack(irq_ack)
 	);
 
-	// Clock generation
+	
     always #5 clk = ~clk;
 
-    // Test sequence
     initial begin
         clk = 0;
         reset = 1;
@@ -56,7 +33,7 @@ module Interrupt_controller_tb;
         reset = 0;
         #10;
 	    
-		  // Test IRQ handling
+        // Test IRQ handling
         irq = 8'b00000001;
         #10;
         $display("IRQ Pending: %b, IRQ Ack: %b", irq_pending, irq_ack);
