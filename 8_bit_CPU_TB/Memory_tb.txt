@@ -1,27 +1,5 @@
 `timescale 1ns / 1ps
 
-////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
-//
-// Create Date:   22:31:31 08/11/2024
-// Design Name:   Memory
-// Module Name:   /home/ise/Desktop/simple8bitCPU/Memory_tb.v
-// Project Name:  simple8bitCPU
-// Target Device:  
-// Tool versions:  
-// Description: 
-//
-// Verilog Test Fixture created by ISE for module: Memory
-//
-// Dependencies:
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-////////////////////////////////////////////////////////////////////////////////
-
 module Memory_tb;
 
 	// Inputs
@@ -44,7 +22,7 @@ module Memory_tb;
 		.read_data(read_data)
 	);
 
-	// Clock generation
+
     always #5 clk = ~clk;
 
     
@@ -55,7 +33,7 @@ module Memory_tb;
         address = 8'h00;
         write_data = 8'hAA;
 		  
-		  // Test write operation
+       // Test write operation
         #10;
         mem_write = 1;
         address = 8'h10;
@@ -63,7 +41,7 @@ module Memory_tb;
         #10;
         mem_write = 0;
 		  
-		  // Test read operation
+        // Test read operation
         #10;
         mem_read = 1;
         address = 8'h10;
