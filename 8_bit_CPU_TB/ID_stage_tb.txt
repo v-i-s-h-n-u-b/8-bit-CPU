@@ -1,27 +1,5 @@
 `timescale 1ns / 1ps
 
-////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
-//
-// Create Date:   22:38:22 08/11/2024
-// Design Name:   ID_Stage
-// Module Name:   /home/ise/Desktop/simple8bitCPU/ID_stage_tb.v
-// Project Name:  simple8bitCPU
-// Target Device:  
-// Tool versions:  
-// Description: 
-//
-// Verilog Test Fixture created by ISE for module: ID_Stage
-//
-// Dependencies:
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-////////////////////////////////////////////////////////////////////////////////
-
 module ID_stage_tb;
 
 	// Inputs
@@ -48,10 +26,9 @@ module ID_stage_tb;
 		.immediate(immediate)
 	);
 
-	 // Clock generation
+
     always #5 clk = ~clk;
 
-    // Test sequence
     initial begin
         clk = 0;
         reset = 1;
@@ -61,6 +38,7 @@ module ID_stage_tb;
         #10;
         reset = 0;
         #10;
+
         // Test instruction decode
         instruction = 8'hAB;
         #10;
