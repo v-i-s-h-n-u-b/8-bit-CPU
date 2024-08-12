@@ -6,7 +6,7 @@ module BranchPredictor(
 );
 
     reg [1:0] state;  // 2-bit state register
-	 // Define states
+    // Define states
     localparam STRONGLY_NOT_TAKEN = 2'b00,
                WEAKLY_NOT_TAKEN   = 2'b01,
                WEAKLY_TAKEN       = 2'b10,
