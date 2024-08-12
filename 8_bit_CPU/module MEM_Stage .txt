@@ -6,7 +6,7 @@ module MEM_Stage (
     input [7:0] reg_data2,
     output [7:0] memory_read_data
 );
-    Memory memory (
+    Memory memory (        // MEM_stage operations defined by the Memory module
         .clk(clk),
         .mem_read(mem_read),
         .mem_write(mem_write),
