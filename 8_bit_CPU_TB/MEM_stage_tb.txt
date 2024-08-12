@@ -20,12 +20,10 @@ module MEM_Stage_tb;
         .memory_read_data(memory_read_data)
     );
 
-    // Clock generation
     always #5 clk = ~clk;
 
-    // Test sequence
     initial begin
-        // Initialize Inputs
+        // Initializing Inputs
         clk = 0;
         mem_read = 0;
         mem_write = 0;
@@ -33,7 +31,7 @@ module MEM_Stage_tb;
         reg_data2 = 8'h00;
 
         // Test Write Operation
-        alu_result = 8'h10;  // Address to write
+        alu_result = 8'h10;  
         reg_data2 = 8'h55;   // Data to write
         mem_write = 1;
         mem_read = 0;
@@ -48,7 +46,7 @@ module MEM_Stage_tb;
         $display("Memory Read Data: %h", memory_read_data);
         mem_read = 0;
 
-        // Test another Write and Read Operation
+        // Testing  another Write and Read Operation
         alu_result = 8'h20;  // New address to write
         reg_data2 = 8'hAA;   // New data to write
         mem_write = 1;
