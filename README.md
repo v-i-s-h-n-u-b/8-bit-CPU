@@ -66,8 +66,8 @@ The 8-bit 'result' stores the result of the operations for further use
 
 Manages registers for data storage and manipulation.
 * INPUTS:
-  -Read Register 1 (read_reg1): Register address for the first read operation.
-  -Read Register 2 (read_reg2): Register address for the second read operation (if applicable).
+-Read Register 1 (read_reg1): Register address for the first read operation.
+-Read Register 2 (read_reg2): Register address for the second read operation (if applicable).
   -Write Register (write_reg): Register address for the write operation.
   -Write Data (write_data): Data to be written to the register.
   -Write Enable (write_enable): Control signal that enables or disables writing to the register file.
