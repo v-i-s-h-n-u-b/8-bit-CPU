@@ -28,6 +28,8 @@ Additional features include:
 
 Instructions are encoded as 8-bit instruction words in a way very similar to that of a MIPS 32-bit ISA but for 8-bit instructions. They can be classfied under three classifications in the ISA. These are Register type (R), Immediate type (Load/Store) (I) and Jump type (Branch instructions) (J).
 
+![Screenshot 2024-08-15 020941](https://github.com/user-attachments/assets/54f558b9-8138-4788-8baf-992b4547dea5)
+
 In this CPU Design the instruction Fields are as follows:
 * 4-bit OPCODE - Instruction[7:4}
 * 3-bit fields for the source and destination registers (rs, rt and rd), depicted as follows 
@@ -61,6 +63,8 @@ Performs logical and arithmetic operations. The operations of the ALU are determ
 * 3'b101 : Default NO Operation
 
 The 8-bit 'result' stores the result of the operations for further use
+
+![Screenshot 2024-08-15 021106](https://github.com/user-attachments/assets/89d6e589-3fe9-467a-8dde-4e7dcdd4ec4b)
 
 ### 2. REGISTER FILES :
 
@@ -96,6 +100,8 @@ The Control Unit (CU) is a central component of the CPU that generates control s
 ### 4. MEMORY 
 
 The Memory module simulates a simple 256 x 8-bit memory unit in a CPU. It supports reading from and writing to memory based on the provided control signals. 
+
+![Screenshot 2024-08-15 021130](https://github.com/user-attachments/assets/fa949de3-1b44-4f95-a2c0-a2108963dbc3)
 
 #### Inputs :
 * clk: The clock signal that synchronizes memory operations.
@@ -159,4 +165,6 @@ Five stages :
 * WB: Write result back to register
 
 ## MAIN CPU OVERVIEW 
+
+
 
