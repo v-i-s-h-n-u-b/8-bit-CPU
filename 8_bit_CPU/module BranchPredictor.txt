@@ -11,7 +11,8 @@ module BranchPredictor(
                WEAKLY_NOT_TAKEN   = 2'b01,
                WEAKLY_TAKEN       = 2'b10,
                STRONGLY_TAKEN     = 2'b11;
-// Update state on clock or reset
+
+    // Updating states
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             state <= STRONGLY_NOT_TAKEN; // Initialize as branch strongly not taken
