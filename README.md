@@ -109,5 +109,4 @@ The Memory module simulates a simple 256 x 8-bit memory unit in a CPU. It suppor
 
 ### 2-bit Branch Predictor 
 
-![Screenshot 2024-08-15 012606](https://github.com/user-attachments/assets/c9541b23-5ae0-4e08-9bd0-a2f11bdc0cd1)
 
