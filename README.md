@@ -46,7 +46,7 @@ Register rs is the base register that is added to the 8-bit address field to for
 
 ### Branch Instructions 
 
-The registers rs and rt are the source registers that are compared for equality. The 8-bit address field is shifted, and added to the PC + 1 to compute the branch target address. (In a typical RISC ISA the 16-bit addresss field is sign extened, shifteed, and added to the PC + 4 to compute the branch target address).
+The registers rs and rt are the source registers that are compared for equality. The 8-bit address field is shifted, and added to the PC + 1 to compute the branch target address. (In a typical RISC ISA the 16-bit address field is sign extened, shifted, and added to the PC + 4 to compute the branch target address).
 
 ## CPU Overview
 
