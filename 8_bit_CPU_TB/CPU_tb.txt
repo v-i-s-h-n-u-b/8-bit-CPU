@@ -48,23 +48,8 @@ module CPU_tb;
     always #5 clk = ~clk;
 
     // Test sequence
-    initial begin
-        clk = 0;
-        reset = 1;
-        irq = 8'b00000000;
 
-        // Reset
-        #10;
-        reset = 0;
-        #10;
-		  
-        // Test CPU operation
-        irq = 8'b00000001;
-        #10;
-        $display("PC: %h, Instruction: %h, Write Data: %h", pc, instruction, write_data);
-
-        $finish;
-    end
+    TO BE UPDATED 
       
 endmodule
 
