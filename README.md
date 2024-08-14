@@ -42,7 +42,7 @@ In this CPU Design the instruction Fields are as follows:
 
 In R-format instructions the data is read from two register operands (rs & rt) .These instructions are used to perform arithmetic and logical operations and write back the result into the register stored in rd.
 
-### Immediate Format 
+### Immediate Format (Load/Store Instructions)
 
 Register rs is the base register that is added to the 8-bit address field to form the memory address. For loads, rt is the destination register for the loaded value. For stores, rt is the source register whose value should be stored into memory.
 
