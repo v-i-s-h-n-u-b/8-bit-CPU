@@ -26,12 +26,52 @@ Microprocessors and Microcontrollers are generally designed in the vicinity of t
 
 ## Instruction Set Architecture (ISA)
 
-Instructions are encoded as 8-bit instruction words in a way very similar to that of a MIPS 32-bit ISA but for 8-bit instructions. They can be classfied under three classifications in the ISA. These are Register type (R), Immediate type (I) and Jump type (J).
+Instructions are encoded as 8-bit instruction words in a way very similar to that of a MIPS 32-bit ISA but for 8-bit instructions. They can be classfied under three classifications in the ISA. These are Register type (R), Immediate type (Load/Store) (I) and Jump type (Branch instructions) (J).
 
-In this CPU Design the instruction encodings are as follows:
-* 3-bit OPCODE - Instruction[7:4}
-* 2-bit fields for the source and destination registers (rs, rt and rd), depicted as follows 
+In this CPU Design the instruction Fields are as follows:
+* 4-bit OPCODE - Instruction[7:4}
+* 3-bit fields for the source and destination registers (rs, rt and rd), depicted as follows 
   - rs: Instruction [3:1]
   - rt: Instruction [2:0]
   - rd: Instruction [2:0]
- 
+* 8 bit Immediate value - Instruction[7:0]
+
+### R-Format instructions
+
+In R-format instructions the data is read from two register operands (rs & rt) .These instructions are used to perform arithmetic and logical operations and write back the result into the register stored in rd.
+
+### Immediate Format 
+
+Register rs is the base register that is added to the 8-bit address field to form the memory address. For loads, rt is the destination register for the loaded value. For stores, rt is the source register whose value should be stored into memory.
+
+### Branch Instructions 
+
+The registers rs and rt are the source registers that are compared for equality. The 8-bit address field is shifted, and added to the PC + 1 to compute the branch target address. (In a typical RISC ISA the 16-bit addresss field is sign extened, shifteed, and added to the PC + 4 to compute the branch target address).
+
+## CPU Overview
+
+### ALU (Arithmetic Logic Unit) :
+
+Performs logical and arithmetic operations. The operations of the ALU are determined by the 3 bit alu_control signal and are as follows:
+* 3'b000 : ADD Operation
+* 3'b001 : SUBTRACT Operation
+* 3'b010 : AND Operation
+* 3'b011 : OR Operation
+* 3'b100 : XOR Operation
+* 3'b101 : Default NO Operation
+
+The 8-bit 'result' stores the result of the operations for further use
+
+### Register Files :
+
+Manages registers for data storage and manipulation.
+* INPUTS:
+  -Read Register 1 (read_reg1): Register address for the first read operation.
+  -Read Register 2 (read_reg2): Register address for the second read operation (if applicable).
+  -Write Register (write_reg): Register address for the write operation.
+  -Write Data (write_data): Data to be written to the register.
+  -Write Enable (write_enable): Control signal that enables or disables writing to the register file.
+
+* OUTPUTS:
+  -Read Data 1 (read_data1): Data read from the register specified by read_reg1.
+  -Read Data 2 (read_data2): Data read from the register specified by read_reg2.
