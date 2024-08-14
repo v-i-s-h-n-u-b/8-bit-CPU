@@ -48,7 +48,7 @@ Register rs is the base register that is added to the 8-bit address field to for
 
 The registers rs and rt are the source registers that are compared for equality. The 8-bit address field is shifted, and added to the PC + 1 to compute the branch target address. (In a typical RISC ISA the 16-bit address field is sign extened, shifted, and added to the PC + 4 to compute the branch target address).
 
-## CPU Overview
+## CPU COMPONENTS OVERVIEW
 
 ### 1. ALU (Arithmetic Logic Unit) :
 
@@ -131,4 +131,32 @@ The state transitions are governed by the actual outcome of the branch (branch_r
 
 #### Outputs :
 * prediction (1-bit): The predicted outcome of the branch. It is 1 if the branch is predicted to be taken and 0 if it is predicted not to be taken.
+
+### 6. INTERRUPT CONTROLLER
+
+The Interrupt Controller module manages interrupt requests (irq) in a CPU, determining when an interrupt is pending and when it has been acknowledged. This module is crucial for handling asynchronous events that require the CPU's immediate attention, such as hardware interrupts.
+
+#### Inputs :
+* clk: The clock signal that drives the state updates in the interrupt controller.
+* reset: A signal to reset the interrupt controller to its initial state.
+* irq (8-bit): An 8-bit interrupt request signal, where each bit represents a different interrupt source.
+
+#### Outputs:
+* irq_pending (1-bit): A flag that indicates if any interrupt is currently pending.
+* irq_ack (1-bit): A flag that acknowledges the receipt and handling of a pending interrupt.
+
+#### Functioning :
+The module monitors the irq input to determine if any interrupt request is active. If irq is non-zero, it sets the irq_pending flag, indicating that an interrupt is pending and needs to be handled by the CPU. The irq_ack signal is asserted (set to 1) when an interrupt is pending (irq_pending = 1) and has not yet been acknowledged. This signal informs the CPU that an interrupt has been detected and is in the process of being handled. Once the interrupt has been acknowledged (irq_ack = 1), the irq_pending flag is cleared, and the irq_ack flag is reset to 0 after the interrupt has been fully processed.
+
+### 7. PIPELINE STAGES :
+
+Five stages : 
+
+* IF: Instruction fetch from memory
+* ID/RF: Instruction decode & register read
+* EX/EA: Execute operation or calculate address
+* MEM: Access memory operand
+* WB: Write result back to register
+
+## MAIN CPU OVERVIEW 
 
