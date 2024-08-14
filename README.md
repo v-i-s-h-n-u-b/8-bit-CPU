@@ -109,4 +109,26 @@ The Memory module simulates a simple 256 x 8-bit memory unit in a CPU. It suppor
 
 ### 2-bit Branch Predictor 
 
+![Screenshot 2024-08-15 013342](https://github.com/user-attachments/assets/70855018-b886-44b1-a438-0e79290fd010)
+
+#### 2 bit Finite State Machine 
+
+The branch predictor uses a 2-bit state machine (reg [1:0] state) to track the history of branch outcomes. The states represent different levels of confidence in the branch being taken or not taken which can be seen from the diagram above. The states are as follows:
+
+* STRONGLY_NOT_TAKEN (00): The predictor is very confident that the branch will not be taken.
+* WEAKLY_NOT_TAKEN (01): The predictor is less confident, but still leans towards the branch not being taken.
+* WEAKLY_TAKEN (10): The predictor is less confident, but leans towards the branch being taken.
+* STRONGLY_TAKEN (11): The predictor is very confident that the branch will be taken.
+
+#### State Transititions 
+
+The state transitions are governed by the actual outcome of the branch (branch_result). Based on the current state and the branch_result, the predictor moves between states. Initially the instruction is predicted to be not taken (STRONGLY NOT TAKEN) and then moves accordingly as seen in the diagram. If the predictor is in a strongly or weakly "not taken" state and the branch is taken, it transitions towards the "taken" states. Conversely, if the predictor is in a strongly or weakly "taken" state and the branch is not taken, it transitions towards the "not taken" states.
+
+#### INPUTS :
+* clk: The clock signal that drives the predictor's state updates.
+* reset: A signal to reset the predictor to its initial state.
+* branch_result (1-bit): The actual outcome of the branch instruction. It is 1 if the branch was taken and 0 if it was not.
+
+#### OUTPUTS :
+* prediction (1-bit): The predicted outcome of the branch. It is 1 if the branch is predicted to be taken and 0 if it is predicted not to be taken.
 
