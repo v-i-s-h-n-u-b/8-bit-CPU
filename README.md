@@ -32,7 +32,7 @@ Instructions are encoded as 8-bit instruction words in a way very similar to tha
 
 In this CPU Design the instruction Fields are as follows:
 * 4-bit OPCODE - Instruction[7:4}
-* 3-bit fields for the source and destination registers (rs, rt and rd), depicted as follows 
+* 3-bit fields for the source and destination registers (rs, rt and rd), depicted as follows :
   - rs: Instruction [3:1]
   - rt: Instruction [2:0]
   - rd: Instruction [2:0]
@@ -50,7 +50,7 @@ Register rs is the base register that is added to the 8-bit address field to for
 
 The registers rs and rt are the source registers that are compared for equality. The 8-bit address field is shifted, and added to the PC + 1 to compute the branch target address. (In a typical RISC ISA the 16-bit address field is sign extened, shifted, and added to the PC + 4 to compute the branch target address).
 
-## CPU COMPONENTS OVERVIEW
+## CPU OVERVIEW
 
 ### 1. ALU (Arithmetic Logic Unit) :
 
@@ -62,7 +62,7 @@ Performs logical and arithmetic operations. The operations of the ALU are determ
 * 3'b100 : XOR Operation
 * 3'b101 : Default NO Operation
 
-The 8-bit 'result' stores the result of the operations for further use
+The 8-bit 'result' stores the result of the operations for further use.
 
 ![Screenshot 2024-08-15 021106](https://github.com/user-attachments/assets/89d6e589-3fe9-467a-8dde-4e7dcdd4ec4b)
 
@@ -156,15 +156,25 @@ The module monitors the irq input to determine if any interrupt request is activ
 
 ### 7. PIPELINE STAGES :
 
-Five stages : 
+Five stages : IF (Instruction Fetch), ID (Instruction Decode), EX (Execute), MEM (Memory), WB (Write Back)
 
-* IF: Instruction fetch from memory
-* ID/RF: Instruction decode & register read
-* EX/EA: Execute operation or calculate address
-* MEM: Access memory operand
-* WB: Write result back to register
+* IF: The CPU fetches the instruction from memory using the Program Counter (PC). If a branch is predicted taken, the PC is updated to the branch address. Otherwise, it increments to the next instruction.
+* ID: The instruction is decoded, and the required registers are read from the Register File. Control signals are generated based on the opcode.
+* EX: The ALU performs the required operation, using either an immediate value or the second register's data as the operand. The result is forwarded to the Memory stage.
+* MEM: Based on control signals, the CPU either reads data from or writes data to memory. The result is forwarded to the Write Back stage.
+* WB: The result from the MEM stage is written back to the Register File, updating the appropriate register.
 
-## MAIN CPU OVERVIEW 
+If an interrupt request is detected, the current PC is saved, and the CPU jumps to the interrupt service routine. After handling the interrupt, the CPU resumes normal execution from the saved PC.
 
+## RESULTS AND DISCUSSIONS 
 
+Successfully implemented and verified all the key components and the 5 pipeline stages in verilog.
+
+## PROBLEMS FACED 
+
+When I ran the design on Xilinx ISE/Vivado, the main CPU module encountered a few parameter instantiation errors. Once these issues are resolved, the updated CPU module code will be uploaded.
+
+## FUTURE WORK 
+
+To try and implement operand forwarding, sign extensions, stalls to handle hazards and realise Instruction level Parallelism (ILP).
 
