@@ -80,7 +80,8 @@ Manages registers for data storage and manipulation.
 
 The Control Unit (CU) is a central component of the CPU that generates control signals based on the current instruction and the state of the CPU. It orchestrates the operation of the CPU by directing the activities of other components such as the Register Files, ALU, and Memory. The CU is essential for fetching, decoding, and executing instructions.
 
-#### INPUTS : 4-bit opcode - Specifies the operation to be performed by the CPU.
+#### INPUTS : 
+* 4-bit opcode - Specifies the operation to be performed by the CPU.
 
 #### OUTPUTS :
 * reg_dst (1-bit): Controls whether the destination register is specified by rd (for R-type instructions) or rt (for I-type instructions like LOAD/STORE).
@@ -103,7 +104,8 @@ The Memory module simulates a simple 256 x 8-bit memory unit in a CPU. It suppor
 * address (8-bit): The memory address where the read or write operation is to be performed. With 8 bits, the memory can address 256 unique locations.
 * write_data (8-bit): The data to be written to memory when the mem_write signal is asserted.
 
-#### OUTPUTS : read_data (8-bit): The data read from the memory at the specified address when the mem_read signal is asserted.
+#### OUTPUTS : 
+* read_data (8-bit): The data read from the memory at the specified address when the mem_read signal is asserted.
 
 ### 2-bit Branch Predictor 
 
