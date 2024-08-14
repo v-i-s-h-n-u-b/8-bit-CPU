@@ -1,3 +1,5 @@
 # Simple-8-bit-CPU
 
-A simple 8-bit-CPU design including the ALU (Arithmetic Logic unit), Register Files, Control Unit, memory registers, and the pipeline registers (IF (Instrution Fetch), ID (Instruction Decode), EX (Execute), MEM(Memory) and WB Write Back) .
+A simplified 8-bit CPU design incorporating an ALU (Arithmetic Logic Unit), register files, control unit, and memory registers, along with pipeline stages for Instruction Fetch (IF), Instruction Decode (ID), Execute (EX), Memory Access (MEM), and Write Back (WB). This design also includes features such as a 2-bit branch predictor and an interrupt controller for enhanced performance and control.
+
+## INTRODUCTION 
