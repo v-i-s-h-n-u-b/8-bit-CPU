@@ -50,7 +50,7 @@ The registers rs and rt are the source registers that are compared for equality.
 
 ## CPU Overview
 
-### ALU (Arithmetic Logic Unit) :
+### 1. ALU (Arithmetic Logic Unit) :
 
 Performs logical and arithmetic operations. The operations of the ALU are determined by the 3 bit alu_control signal and are as follows:
 * 3'b000 : ADD Operation
@@ -62,28 +62,28 @@ Performs logical and arithmetic operations. The operations of the ALU are determ
 
 The 8-bit 'result' stores the result of the operations for further use
 
-### Register Files :
+### 2. REGISTER FILES :
 
 Manages registers for data storage and manipulation.
-#### INPUTS:
+#### Inputs:
 * Read Register 1 (read_reg1): Register address for the first read operation.
 * Read Register 2 (read_reg2): Register address for the second read operation (if applicable).
 * Write Register (write_reg): Register address for the write operation.
 * Write Data (write_data): Data to be written to the register.
 * Write Enable (write_enable): Control signal that enables or disables writing to the register file.
  
-#### OUTPUTS:
+#### Outputs:
 * Read Data 1 (read_data1): Data read from the register specified by read_reg1.
 * Read Data 2 (read_data2): Data read from the register specified by read_reg2.
 
-### Control Unit 
+### 3. CONTROL UNIT
 
 The Control Unit (CU) is a central component of the CPU that generates control signals based on the current instruction and the state of the CPU. It orchestrates the operation of the CPU by directing the activities of other components such as the Register Files, ALU, and Memory. The CU is essential for fetching, decoding, and executing instructions.
 
-#### INPUTS : 
+#### Inputs : 
 * 4-bit opcode - Specifies the operation to be performed by the CPU.
 
-#### OUTPUTS :
+#### Outputs :
 * reg_dst (1-bit): Controls whether the destination register is specified by rd (for R-type instructions) or rt (for I-type instructions like LOAD/STORE).
 * alu_src (1-bit): Determines whether the ALU should use an immediate value or a register value as its second operand.
 * mem_to_reg (1-bit): Indicates whether the data to be written to the register file comes from memory (for LOAD instructions).
@@ -93,21 +93,21 @@ The Control Unit (CU) is a central component of the CPU that generates control s
 * branch (1-bit): Indicates whether a branch operation is to be performed (used for branch instructions).
 * alu_control (3-bit): Specifies the operation to be performed by the ALU (e.g., addition, subtraction).
 
-### MEMORY
+### 4. MEMORY 
 
 The Memory module simulates a simple 256 x 8-bit memory unit in a CPU. It supports reading from and writing to memory based on the provided control signals. 
 
-#### INPUTS :
+#### Inputs :
 * clk: The clock signal that synchronizes memory operations.
 * mem_read (1-bit): A control signal that enables reading data from memory when asserted (logic high).
 * mem_write (1-bit): A control signal that enables writing data to memory when asserted (logic high).
 * address (8-bit): The memory address where the read or write operation is to be performed. With 8 bits, the memory can address 256 unique locations.
 * write_data (8-bit): The data to be written to memory when the mem_write signal is asserted.
 
-#### OUTPUTS : 
+#### Outputs : 
 * read_data (8-bit): The data read from the memory at the specified address when the mem_read signal is asserted.
 
-### 2-bit Branch Predictor 
+### 5. 2-BIT BRANCH PREDICTOR
 
 ![Screenshot 2024-08-15 013342](https://github.com/user-attachments/assets/70855018-b886-44b1-a438-0e79290fd010)
 
@@ -124,11 +124,11 @@ The branch predictor uses a 2-bit state machine (reg [1:0] state) to track the h
 
 The state transitions are governed by the actual outcome of the branch (branch_result). Based on the current state and the branch_result, the predictor moves between states. Initially the instruction is predicted to be not taken (STRONGLY NOT TAKEN) and then moves accordingly as seen in the diagram. If the predictor is in a strongly or weakly "not taken" state and the branch is taken, it transitions towards the "taken" states. Conversely, if the predictor is in a strongly or weakly "taken" state and the branch is not taken, it transitions towards the "not taken" states.
 
-#### INPUTS :
+#### Inputs :
 * clk: The clock signal that drives the predictor's state updates.
 * reset: A signal to reset the predictor to its initial state.
 * branch_result (1-bit): The actual outcome of the branch instruction. It is 1 if the branch was taken and 0 if it was not.
 
-#### OUTPUTS :
+#### Outputs :
 * prediction (1-bit): The predicted outcome of the branch. It is 1 if the branch is predicted to be taken and 0 if it is predicted not to be taken.
 
