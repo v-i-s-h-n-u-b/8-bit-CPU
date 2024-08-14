@@ -78,4 +78,32 @@ Manages registers for data storage and manipulation.
 
 ### Control Unit 
 
+The Control Unit (CU) is a central component of the CPU that generates control signals based on the current instruction and the state of the CPU. It orchestrates the operation of the CPU by directing the activities of other components such as the Register Files, ALU, and Memory. The CU is essential for fetching, decoding, and executing instructions.
+
+#### INPUTS : 4-bit opcode - Specifies the operation to be performed by the CPU.
+
+#### OUTPUTS :
+* reg_dst (1-bit): Controls whether the destination register is specified by rd (for R-type instructions) or rt (for I-type instructions like LOAD/STORE).
+* alu_src (1-bit): Determines whether the ALU should use an immediate value or a register value as its second operand.
+* mem_to_reg (1-bit): Indicates whether the data to be written to the register file comes from memory (for LOAD instructions).
+* reg_write (1-bit): Enables writing to the register file.
+* mem_read (1-bit): Enables reading from memory.
+* mem_write (1-bit): Enables writing to memory.
+* branch (1-bit): Indicates whether a branch operation is to be performed (used for branch instructions).
+* alu_control (3-bit): Specifies the operation to be performed by the ALU (e.g., addition, subtraction).
+
+### MEMORY
+
+The Memory module simulates a simple 256 x 8-bit memory unit in a CPU. It supports reading from and writing to memory based on the provided control signals. 
+
+#### INPUTS :
+* clk: The clock signal that synchronizes memory operations.
+* mem_read (1-bit): A control signal that enables reading data from memory when asserted (logic high).
+* mem_write (1-bit): A control signal that enables writing data to memory when asserted (logic high).
+* address (8-bit): The memory address where the read or write operation is to be performed. With 8 bits, the memory can address 256 unique locations.
+* write_data (8-bit): The data to be written to memory when the mem_write signal is asserted.
+
+#### OUTPUTS : read_data (8-bit): The data read from the memory at the specified address when the mem_read signal is asserted.
+
+### 2-bit Branch Predictor 
 
