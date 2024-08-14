@@ -26,7 +26,7 @@ Additional features include:
 
 ## Instruction Set Architecture (ISA)
 
-Instructions are encoded as 8-bit instruction words in a way very similar to that of a MIPS 32-bit ISA but for 8-bit instructions. They can be classfied under three classifications in the ISA. These are Register type (R), Immediate type (Load/Store) (I) and  Branch Instructions.
+Instructions are encoded as 8-bit instruction words in a way very similar to that of a MIPS 32-bit ISA but for 8-bit instructions. They can be classfied under three classifications in the ISA. These are Register type (R), Load/Store and  Branch Instructions.
 
 In this CPU Design the instruction Fields are as follows:
 * 4-bit OPCODE - Instruction[7:4}
@@ -40,7 +40,7 @@ In this CPU Design the instruction Fields are as follows:
 
 In R-format instructions the data is read from two register operands (rs & rt) .These instructions are used to perform arithmetic and logical operations and write back the result into the register stored in rd.
 
-### Immediate Format (Load/Store Instructions)
+### Load/Store Instructions
 
 Register rs is the base register that is added to the 8-bit address field to form the memory address. For loads, rt is the destination register for the loaded value. For stores, rt is the source register whose value should be stored into memory.
 
