@@ -26,9 +26,7 @@ Additional features include:
 
 ## Instruction Set Architecture (ISA)
 
-Instructions are encoded as 8-bit instruction words in a way very similar to that of a MIPS 32-bit ISA but for 8-bit instructions. They can be classfied under three classifications in the ISA. These are Register type (R), Immediate type (Load/Store) (I) and Jump type (J).
-
-![Screenshot 2024-08-15 020941](https://github.com/user-attachments/assets/54f558b9-8138-4788-8baf-992b4547dea5)
+Instructions are encoded as 8-bit instruction words in a way very similar to that of a MIPS 32-bit ISA but for 8-bit instructions. They can be classfied under three classifications in the ISA. These are Register type (R), Immediate type (Load/Store) (I) and  Branch Instructions.
 
 In this CPU Design the instruction Fields are as follows:
 * 4-bit OPCODE - Instruction[7:4}
