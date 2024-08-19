@@ -62,8 +62,6 @@ Performs logical and arithmetic operations. The operations of the ALU are determ
 
 The 8-bit 'result' stores the result of the operations for further use.
 
-![Screenshot 2024-08-15 021106](https://github.com/user-attachments/assets/89d6e589-3fe9-467a-8dde-4e7dcdd4ec4b)
-
 ### 2. REGISTER FILES :
 
 Manages registers for data storage and manipulation.
@@ -98,8 +96,6 @@ The Control Unit (CU) is a central component of the CPU that generates control s
 ### 4. MEMORY 
 
 The Memory module simulates a simple 256 x 8-bit memory unit in a CPU. It supports reading from and writing to memory based on the provided control signals. 
-
-![Screenshot 2024-08-15 021130](https://github.com/user-attachments/assets/fa949de3-1b44-4f95-a2c0-a2108963dbc3)
 
 #### Inputs :
 * clk: The clock signal that synchronizes memory operations.
