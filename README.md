@@ -164,7 +164,7 @@ Successfully implemented and verified all the key components and the 5 pipeline 
 
 ## PROBLEMS FACED 
 
-When I ran the design on Xilinx ISE/Vivado, the main CPU module encountered a few parameter instantiation errors. Once these issues are resolved, the updated CPU module code will be uploaded.
+When the design was run on Xilinx ISE/Vivado, the main CPU module encountered a few parameter instantiation errors. Once these issues are resolved, the updated CPU module code will be uploaded.
 
 ## FUTURE WORK 
 
