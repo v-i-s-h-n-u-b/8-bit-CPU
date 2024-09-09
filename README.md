@@ -168,5 +168,5 @@ When I ran the design on Xilinx ISE/Vivado, the main CPU module encountered a fe
 
 ## FUTURE WORK 
 
-To try and implement operand forwarding, sign extensions, stalls to handle hazards and realise Instruction level Parallelism (ILP).
+To implement operand forwarding, sign extensions, stalls to handle hazards and realise Instruction level Parallelism (ILP).
 
